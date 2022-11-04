@@ -60,6 +60,8 @@ class DBStadaAdapter(DiffSync):
             # Handle sites
             try:
                 longitude, latitude = station["ril100Identifiers"][0]["geographicCoordinates"]["coordinates"]
+                longitude = round(longitude, 6)
+                latitude = round(latitude, 6)
             except KeyError:
                 longitude, latitude = None, None
             site = BaseSite(

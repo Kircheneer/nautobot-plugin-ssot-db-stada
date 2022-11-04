@@ -28,13 +28,13 @@ class NautobotAdapter(DiffSync):
     def load(self):
         """Load data from Nautobot into DiffSync models."""
         for region in Region.objects.all():
-            diffsync_region = BaseRegion(
+            diffsync_region = NautobotRegion(
                 name=region.name
             )
             self.add(diffsync_region)
             self.job.log_success(message=f"Successfully loaded region {region} from Nautobot.")
             for site in Site.objects.filter(region=region):
-                diffsync_site = BaseSite(
+                diffsync_site = NautobotSite(
                     name=site.name,
                     region_name=diffsync_region.name,
                     description=site.description,

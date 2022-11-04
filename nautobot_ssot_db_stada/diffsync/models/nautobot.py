@@ -52,16 +52,8 @@ class NautobotSite(BaseSite):
     def update(self, attrs):
         """Update Site in Nautobot from NautobotSite object."""
         site = Site.objects.get(name=self.name)
-        for field in [
-            "description",
-            "shipping_address",
-            "latitude",
-            "longitude",
-            "contact_name",
-            "contact_phone"
-        ]:
-            if field in attrs:
-                setattr(site, field, attrs[field])
+        for field, value in attrs.items():
+            setattr(site, field, value)
         site.validated_save()
         return super().update(attrs)
 

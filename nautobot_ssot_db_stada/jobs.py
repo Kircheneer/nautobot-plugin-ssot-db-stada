@@ -3,7 +3,7 @@
 from diffsync import DiffSyncFlags
 from django.urls import reverse
 from nautobot.extras.jobs import BooleanVar, Job
-from nautobot_ssot.jobs.base import DataSource, DataTarget, DataMapping
+from nautobot_ssot.jobs.base import DataSource, DataMapping
 from nautobot_ssot_db_stada.diffsync.adapters import db_stada, nautobot
 
 
@@ -18,7 +18,7 @@ class DBStadaDataSource(DataSource, Job):
     def __init__(self):
         """Initialize DB StaDa Data Source."""
         super().__init__()
-        self.diffsync_flags = self.diffsync_flags | DiffSyncFlags.CONTINUE_ON_FAILURE
+        self.diffsync_flags = DiffSyncFlags.NONE
 
     class Meta:  # pylint: disable=too-few-public-methods
         """Meta data for DB StaDa."""
@@ -50,6 +50,16 @@ class DBStadaDataSource(DataSource, Job):
         """Load data from Nautobot into DiffSync models."""
         self.target_adapter = nautobot.NautobotAdapter(job=self, sync=self.sync)
         self.target_adapter.load()
+
+    def execute_sync(self):
+        """Method to synchronize the difference from `self.diff`, from SOURCE to TARGET adapter.
+
+        This is a generic implementation that you could overwrite completely in your custom logic.
+        """
+        if self.source_adapter is not None and self.target_adapter is not None:
+            self.source_adapter.sync_to(self.target_adapter, flags=self.diffsync_flags)
+        else:
+            self.log_warning(message="Not both adapters were properly initialized prior to synchronization.")
 
 
 jobs = [DBStadaDataSource]
