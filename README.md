@@ -6,41 +6,9 @@ The term SSoT, or Single Source of Truth, refers to the intention of using Nauto
 
 ## Installation
 
-The plugin is available as a Python package in pypi and can be installed with pip
+You should not install this plugin. This was developed as part of a talk at DENOG14 in 2022 and exists only as a demo example.
 
-```shell
-pip install nautobot-ssot-db-stada
-```
-
-> The plugin is compatible with Nautobot 1.2.0 and higher
-
-To ensure Nautobot SSoT DB Stada is automatically re-installed during future upgrades, create a file named `local_requirements.txt` (if not already existing) in the Nautobot root directory (alongside `requirements.txt`) and list the `nautobot-ssot-db-stada` package:
-
-```no-highlight
-# echo nautobot-ssot-db-stada >> local_requirements.txt
-```
-
-Once installed, the plugin needs to be enabled in your `nautobot_config.py`
-
-```python
-# In your nautobot_config.py
-PLUGINS = ["nautobot_ssot", "nautobot_ssot_db_stada"]
-
-# PLUGINS_CONFIG = {
-#   "nautobot_ssot_db_stada": {
-#     ADD YOUR SETTINGS HERE
-#   }
-# }
-```
-
-The plugin behavior can be controlled with the following list of settings
-
-- TODO
-
-Databases supported:
-
-- Postgres
-- Mysql
+If you want to play aroud with it, take a look at the "Development Environment" section to see how you can spin up a local development stack.
 
 ## Usage
 
